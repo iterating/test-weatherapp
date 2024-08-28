@@ -1,15 +1,30 @@
 <!DOCTYPE HTML>
 <html lang = "en">
 <head>
-	<script src="	"></script>
+	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.12/css/weather-icons.min.css">
+	
 	<title></title>
 </head>
+
+<style>
+	
+</style>
 <body>
 	<div class="container">
 		<label for="city"> Your City </label>
 		<input type="text" id="cityInput">
 		<div id="cityMessage">Enter Your City </div>
 	</div>
+	<div class="loading hide"></div>
+	<div id="unitSwitch"></div>
+	<!-- <div id="divIconWeather"><i class="wi wi-day-sunny"></i></div> -->
+	<div id="divLocation"></div>
+	<div id="divTemp"></div>
+	<div id="divWeatherDesc"></div>
+	<div id="divFeelsLike"></div>
+
 </body>
 <script src="weather.js"></script>
 </html>
+

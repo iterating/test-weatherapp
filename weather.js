@@ -6,9 +6,11 @@ const getWeatherData = async (cityName) => {
     try {
         const validCityName = encodeURIComponent(cityName); 
         //encodeURIComponent allows a string to be inserted into a URI template literal
-        const data = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${validCityName},US?key=${SHOULD_BE_IN_ENV}`);
+        const data = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${validCityName}?key=${SHOULD_BE_IN_ENV}`);
         //loading
         weatherData = await data.json();
+        showWeather();
+
 		console.log(weatherData.currentConditions); 
 		console.log(weatherData); 
     } catch (error) {
@@ -17,8 +19,8 @@ const getWeatherData = async (cityName) => {
 }
 
 //Regex filter for numbers and special characters
-const cityValidationRegex = /^[a-zA-Z\s'-]+$/; 
 
+const cityValidationRegex = /^[a-zA-Z\s'-]+$/; 
 function validateCity(){
     const cityMessage= document.getElementById("cityMessage");
     cityInput.addEventListener('input', ()=>{
@@ -30,8 +32,13 @@ function validateCity(){
 }
 document.addEventListener('DOMContentLoaded', () => {
     validateCity();
+    
 });
-
+const iconWeather = document.querySelector('#icon-weather');
+const divTemp = document.querySelector('#divTemp')
+const divLocation = document.querySelector('#divLocation')
+const divWeatherDesc = document.querySelector('#divWeatherDesc')
+const divFeelsLike =  document.querySelector('#divFeelsLike')
 
 cityInput.addEventListener('keypress', (event) => {
     if (event.key === 'Enter') {
@@ -39,19 +46,38 @@ cityInput.addEventListener('keypress', (event) => {
         const cityName = cityInput.value.trim();
         if (cityValidationRegex.test(cityName)) {
             getWeatherData(cityName);
+            showWeather(weatherData);
+
         } else {
             cityMessage.textContent = "Enter a valid city name";
-        }
     }
+    }
+    
 });
 
+function showWeather() {
+    if (!weatherData || !weatherData.currentConditions) {
+        return; // Don't update if weatherData is not available
+    }
+
+    const divTemp = document.querySelector('#divTemp');
+    const divLocation = document.querySelector('#divLocation');
+    const divWeatherDesc = document.querySelector('#divWeatherDesc');
+    const divFeelsLike = document.querySelector('#divFeelsLike');
+    const iconWeather = document.querySelector('#divIconWeather');
+
+    divTemp.textContent = `Temperature: ${weatherData.currentConditions.temp}°`;
+    divLocation.textContent = `Location: ${weatherData.resolvedAddress}`;
+    divWeatherDesc.textContent = `Weather: ${weatherData.description}`;
+    divFeelsLike.textContent = `Feels Like: ${weatherData.currentConditions.feelslike}°`;
+    //iconWeather.textContent= weatherData.iconWeather
+
+}
 // - [ ] toggle C/F
 // - [ ] change backgorund based on conditions
 // - [ ] 
 
-// weatherData.resolvedAddress
-// weatherData.description
-// weatherData.currentConditions.icon
-// weatherData.currentConditions.feelslike
 
 
+
+//function loading(state) [ ]
