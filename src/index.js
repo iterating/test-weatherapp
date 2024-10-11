@@ -1,15 +1,13 @@
 const cityInput = document.getElementById('cityInput');
-const SHOULD_BE_IN_ENV='JPPTP2Z7DMHG2KAFAX5B7745S'
+const SHOULD_BE_IN_ENV="JJPPTP2Z7DMHG2KAFAX5B7745S"
 let weatherData = '';
-
-axios.defaults.headers.common["x-api-key"] = SHOULD_BE_IN_ENV;
 
 
 const getWeatherData = async (cityName) => {
     try {
         const validCityName = encodeURIComponent(cityName); 
         //encodeURIComponent allows a string to be inserted into a URI template literal
-        const response = await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${validCityName}`), 
+        const response = await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${validCityName}?key=${SHOULD_BE_IN_ENV}`), 
 
 
         //loading
